@@ -16,6 +16,17 @@
       </span>
     </div>
     <div class="chapter-actions">
+
+    @if($isHtmx)
+      <a class="btn"
+        hx-delete="{{ route('outline.chapters.destroy', $chapter) }}"
+        hx-confirm="Are you sure you want to delete this chapter?"
+        hx-headers='{"X-CSRF-TOKEN": "{{ csrf_token() }}"}'
+        hx-target=".chapter-list"
+        hx-swap="outerHTML"
+      >Delete Chapter</a>
+      <a class="btn" hx-get="{{ route('outline.chapters.edit', $chapter) }}" hx-target="#modal" hx-swap="innerHTML">Edit Chapter</a>
+    @else
       <a href="{{ route('outline.chapters.index') }}" class="btn">
         Go back to full chapter timeline
       </a>
@@ -34,6 +45,8 @@
           Delete Chapter
         </button>
       </form>
+    @endif
+    
     </div>
   </div>
   @endfragment

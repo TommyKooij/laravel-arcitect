@@ -7,8 +7,8 @@
   <div class="chapter-list content" id="chapter-list">
     <div class="flex justify-between items-center mb-8">
       <h2 class="text-xl ml-2 font-bold">Chapters</h2>
-      <a href="{{ route('outline.chapters.create') }}" class="btn inline-block mb-4" 
-        @if($isHTMX)
+      <a href="{{ route('outline.chapters.create') }}" class="btn inline-block mb-4"
+        @if($isHtmx)
           hx-get="{{ route('outline.chapters.create') }}"
           hx-target="#modal"
           hx-swap="innerHTML"
@@ -18,21 +18,24 @@
       </a>
     </div>
 
+    <div class="sortable">
       @forelse ($chapters as $chapter)
 
-      <div class="chapter" id="chapter-{{ $chapter->id }}">
+      <div class="chapter" id="chapter-{{ $chapter->id }}" data-id="{{ $chapter->id }}">
+        @if($isHtmx)
+          <div class="handle">☰</div>
+        @endif
         <div class="chapter-header">
           <h2>Chapter {{ $chapter->order }}</h2>
           <a 
             href="{{ route('outline.chapters.show', $chapter) }}" 
             class="chapter-title"
-            @if($isHTMX)
+            @if($isHtmx)
               hx-get="{{ route('outline.chapters.show', $chapter) }}"
               hx-target="#modal"
               hx-swap="innerHTML"
             @endif
-          >
-            {{ $chapter->title }}
+          >{{ $chapter->title }}
           </a>
         </div>
         <div class="chapter-description">
@@ -40,9 +43,15 @@
         </div>
       </div>
 
-    @empty
-      <p class="empty">No chapters yet. Add your first one to get started!</p>
-    @endforelse
+      @empty
+        <p class="empty">No chapters yet. Add your first one to get started!</p>
+      @endforelse
+    </div> {{-- end sortable --}}
   </div>
   @endfragment
+
+  @fragment('modal')
+  <div class="modal-content" id="modal" hx-swap-oob="true"></div>
+  @endfragment
+
 @endsection

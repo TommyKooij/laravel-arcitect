@@ -140,3 +140,12 @@ body {
 .modal-content:has(form, .chapter-details) {
   @apply my-12 mx-auto p-12 bg-white rounded-sm max-w-200;
 }
+
+/* sortables */
+.sorting {
+  @apply outline-dotted outline-indigo-500 opacity-50;
+}
+
+.handle {
+  @apply absolute right-0 top-0 h-full flex items-center justify-center cursor-grab px-2 bg-gray-200;
+}
